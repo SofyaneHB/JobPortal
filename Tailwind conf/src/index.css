@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@source "../../**/*.php";
+
+html {
+  scroll-behavior: smooth !important;
+}

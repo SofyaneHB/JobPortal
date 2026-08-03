@@ -1,0 +1,12 @@
+.env
+
+# Playwright
+/playwright-report/
+/test-results/
+/tests/
+playwright.config.js
+
+# Node
+/node_modules/
+package-lock.json
+

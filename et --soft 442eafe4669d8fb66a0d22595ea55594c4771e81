@@ -1,0 +1,23 @@
+[33m8f723c7[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m chore: remove Playwright GitHub Actions workflow
+[33mf0de1b2[m Backup before repo migration
+[33mb19a7ec[m Fix test URLs to use process.env for CI
+[33m5a3d935[m Fix CI: add /Public to BASE_URL and improve DB setup
+[33m4e4453a[m Merge branch 'main' of https://github.com/SofyaneHB/Job-Portal
+[33m1778f7c[m Add database schema for CI tests
+[33m9dd4f3d[m Update playwright.yml
+[33m9596900[m Update playwright.yml
+[33me443e2c[m Update playwright.yml
+[33md7e6a7d[m ADD New features
+[33mb2d664d[m Add and modify Files
+[33mf7c736c[m UPDATE Logic  and ADD candidate section
+[33me37fa63[m Update logic
+[33md781104[m Add includes files
+[33m2fc29be[m login and logout logic
+[33m22ed742[m Initialize README with project details
+[33m67556f3[m Add logic validation forms ...
+[33m1d59407[m Delete Register.php
+[33mc4f0a32[m Add files via upload
+[33mfde7c27[m database and register logic
+[33mb38d6cc[m login and register
+[33mb12a6db[m structure files
+[33m442eafe[m Job portal index.php
