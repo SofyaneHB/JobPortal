@@ -10,3 +10,10 @@ playwright.config.js
 /node_modules/
 package-lock.json
 
+# Tailwind
+Tailwind conf/
+
+# Generated CSS
+output.css
+
+
