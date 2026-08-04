@@ -8,6 +8,10 @@ require_login(['company']);
 
 $user_id    = $_SESSION['user_id'];
 $company_id = $_SESSION['company_id'];
+$stmt = $pdo->prepare("SELECT company_name, logo, description FROM companies WHERE id = ? LIMIT 1");
+$stmt->execute([$company_id]);
+$company_data = $stmt->fetch(PDO::FETCH_ASSOC);
+$display_name = $company_data['company_name'] ?? 'Company';
 
 /* ── Sidebar info ── */
 $stmt = $pdo->prepare("SELECT c.company_name, u.email FROM companies c JOIN users u ON c.user_id = u.id WHERE c.id = ? LIMIT 1");
@@ -69,12 +73,13 @@ $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mes Offres | JobPortal</title>
+    <title>Manage Jobs</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>body { font-family: 'Plus Jakarta Sans', sans-serif; }</style>
 </head>
 <body class="flex bg-slate-950 text-slate-100 min-h-screen">
+
 
 <!-- SIDEBAR -->
 <aside class="w-64 border-r border-slate-900 bg-slate-950/40 h-screen fixed flex flex-col justify-between z-40">
@@ -84,16 +89,16 @@ $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <?= strtoupper(substr($company['company_name'] ?? 'C', 0, 1)) ?>
             </div>
             <div>
-                <div class="font-bold text-sm text-slate-200">Sofyane_HB_Portal</div>
-                <div class="text-[10px] text-indigo-400 font-semibold uppercase tracking-wider">Espace Recruteur</div>
+                <div class="font-bold text-sm text-slate-200 tracking-tight"><?= htmlspecialchars($display_name) ?></div>
+                <div class="text-[10px] text-indigo-400 font-semibold uppercase tracking-wider">Recuriter Dashboard</div>
             </div>
         </div>
         <nav class="p-4 space-y-1.5 text-xs font-medium">
             <a href="dashboard.php"  class="flex items-center px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 rounded-xl transition">Dashboard</a>
-            <a href="profile.php"    class="flex items-center px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 rounded-xl transition">Profil Entreprise</a>
-            <a href="add_job.php"    class="flex items-center px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 rounded-xl transition">Publier une Offre</a>
-            <a href="my_jobs.php"    class="flex items-center px-3 py-2.5 bg-indigo-600/10 border border-indigo-500/20 text-indigo-400 rounded-xl font-semibold">Gérer les Postes</a>
-            <a href="applicants.php" class="flex items-center px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 rounded-xl transition">Candidatures Reçues</a>
+            <a href="profile.php"    class="flex items-center px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 rounded-xl transition">Company Dashboard</a>
+            <a href="add_job.php"    class="flex items-center px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 rounded-xl transition">Publish a Job Offer</a>
+            <a href="my_jobs.php"    class="flex items-center px-3 py-2.5 bg-indigo-600/10 border border-indigo-500/20 text-indigo-400 rounded-xl font-semibold">Manage Jobs</a>
+            <a href="applicants.php" class="flex items-center px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 rounded-xl transition">Applications Received</a>
         </nav>
     </div>
     <div class="p-4 border-t border-slate-900">
@@ -109,12 +114,9 @@ $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <div class="flex justify-between items-center mb-8">
         <div>
-            <h1 class="text-2xl font-bold text-white">Gérer les Postes</h1>
-            <p class="text-slate-400 text-sm mt-1">Modifiez, fermez ou supprimez vos offres d'emploi.</p>
+            <h1 class="text-2xl font-bold text-white">Manage Jobs</h1>
+            <p class="text-slate-400 text-sm mt-1">Edit, close or delete your job offers</p>
         </div>
-        <a href="add_job.php" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition">
-            + Publier une Offre
-        </a>
     </div>
 
     <div class="bg-slate-900/20 border border-slate-900 rounded-2xl overflow-hidden">
@@ -146,7 +148,7 @@ $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <tr class="hover:bg-slate-900/30 transition">
                     <td class="px-6 py-4">
                         <div class="font-bold text-slate-200"><?= htmlspecialchars($job['title']) ?></div>
-                        <div class="text-xs text-slate-500 mt-0.5">📍 <?= htmlspecialchars($job['location']) ?></div>
+                        <div class="text-xs text-slate-500 mt-0.5"> <?= htmlspecialchars($job['location']) ?></div>
                     </td>
                     <td class="px-6 py-4 text-slate-400 text-xs font-medium uppercase"><?= htmlspecialchars($job['type']) ?></td>
 
@@ -166,7 +168,7 @@ $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                     <td class="px-6 py-4">
                         <span class="text-indigo-400 font-bold"><?= (int)$job['applicant_count'] ?></span>
-                        <span class="text-slate-500 text-xs ml-1">candidat(s)</span>
+                        <span class="text-slate-500 text-xs ml-1">candidate(s)</span>
                     </td>
 
                     <!-- ACTIONS -->
@@ -174,13 +176,13 @@ $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <div class="flex items-center justify-end gap-3">
                             <a href="edit_jobs.php?id=<?= $job['id'] ?>"
                                class="text-xs font-bold text-indigo-400 hover:text-indigo-300 transition">
-                                Modifier
+                                Edit
                             </a>
                             <!-- DELETE with confirm -->
                             <form method="POST" onsubmit="return confirm('Supprimer cette offre et toutes ses candidatures ?')">
                                 <input type="hidden" name="delete_job_id" value="<?= $job['id'] ?>">
                                 <button type="submit" class="text-xs font-bold text-rose-400 hover:text-rose-300 transition">
-                                    Supprimer
+                                    Delete
                                 </button>
                             </form>
                         </div>
