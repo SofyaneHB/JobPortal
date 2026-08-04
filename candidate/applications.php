@@ -40,7 +40,7 @@ $unread_count = (int) $stmt->fetchColumn();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mes Candidatures</title>
+    <title>My Applications</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -59,8 +59,8 @@ $unread_count = (int) $stmt->fetchColumn();
                     <?= strtoupper(substr($user['full_name'], 0, 1)) ?>
                 </div>
                 <div>
-                    <div class="font-bold text-sm text-slate-200">Sofyane_HB_Portal</div>
-                    <div class="text-[10px] text-emerald-400 font-semibold uppercase tracking-wider">Espace Candidat</div>
+                    <div class="font-bold text-sm text-slate-200">Sofyane_HB</div>
+                    <div class="text-[10px] text-emerald-400 font-semibold uppercase tracking-wider">Candidate Space</div>
                 </div>
             </div>
             <nav class="p-4 space-y-1.5 text-xs font-medium">
@@ -70,15 +70,15 @@ $unread_count = (int) $stmt->fetchColumn();
                 </a>
                 <a href="../jobs/index.php" class="flex items-center px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 rounded-xl transition">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                    Offres d'emploi
+                    Job Offers
                 </a>
                 <a href="applications.php" class="flex items-center px-3 py-2.5 bg-emerald-600/10 border border-emerald-500/20 text-emerald-400 rounded-xl font-semibold">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                    Mes Candidatures
+                    My Applications
                 </a>
                 <a href="profile.php" class="flex items-center px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 rounded-xl transition">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                    Mon Profil
+                    My Profile
                 </a>
             </nav>
         </div>
@@ -94,7 +94,7 @@ $unread_count = (int) $stmt->fetchColumn();
         <!-- TOP NAVBAR -->
         <nav class="border-b border-slate-900 bg-slate-950/40 backdrop-blur-md sticky top-0 z-30">
             <div class="flex items-center justify-between px-8 py-3">
-                <div class="text-xs text-slate-500 font-medium">Mes Candidatures</div>
+                <div class="text-xs text-slate-500 font-medium">My Applications</div>
                 <div class="flex items-center gap-4">
                     <!-- Notification Bell -->
                     <a href="dashboard.php" class="relative p-2 text-slate-400 hover:text-slate-200 transition rounded-lg hover:bg-slate-900/40">
@@ -119,9 +119,8 @@ $unread_count = (int) $stmt->fetchColumn();
 
         <div class="p-8 md:p-12 max-w-5xl">
             <div class="mb-8">
-                <div class="text-[11px] font-bold uppercase tracking-wider text-emerald-400 mb-1">Suivi</div>
-                <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-white">Mes Candidatures</h1>
-                <p class="text-slate-400 text-xs md:text-sm mt-1">Suivez l'état de vos postulations.</p>
+                <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-white">My Applications</h1>
+                <p class="text-slate-400 text-xs md:text-sm mt-1"> Track your status of your Applications</p>
             </div>
 
             <?php display_flash(); ?>
@@ -129,8 +128,8 @@ $unread_count = (int) $stmt->fetchColumn();
             <?php if (empty($applications)): ?>
                 <div class="bg-slate-900/20 border border-slate-900 rounded-2xl p-12 text-center">
                     <svg class="w-12 h-12 mx-auto mb-4 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                    <p class="text-slate-500 text-sm">Vous n'avez pas encore postulé à une offre.</p>
-                    <a href="../jobs/index.php" class="inline-block mt-4 text-xs font-bold text-emerald-400 hover:text-emerald-300 transition">Parcourir les offres →</a>
+                    <p class="text-slate-500 text-sm">You haven't applied to any offer yet.</p>
+                    <a href="../jobs/index.php" class="inline-block mt-4 text-xs font-bold text-emerald-400 hover:text-emerald-300 transition">Browse Job Offers</a>
                 </div>
             <?php else: ?>
                 <div class="space-y-4">
