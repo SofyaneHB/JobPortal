@@ -8,6 +8,10 @@ require_login(['company']);
 
 $user_id    = $_SESSION['user_id'] ?? null;
 $company_id = $_SESSION['company_id'] ?? null;
+$stmt = $pdo->prepare("SELECT company_name, logo, description FROM companies WHERE id = ? LIMIT 1");
+$stmt->execute([$company_id]);
+$company_data = $stmt->fetch(PDO::FETCH_ASSOC);
+$display_name = $company_data['company_name'] ?? 'Company';
 
 if (!$company_id || !$user_id) {
     set_flash("error", "Session manquante.");
@@ -187,12 +191,15 @@ function getCvPath($app) {
     return null;
 }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Candidatures Reçues | JobPortal</title>
+    <title>Applications Received</title>
+    <link rel="icon" type="image/png" href="../assets/img/logo_jp.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -202,6 +209,7 @@ function getCvPath($app) {
         .notif-unread { background: rgba(99, 102, 241, 0.08); }
     </style>
 </head>
+
 <body class="flex bg-slate-950 text-slate-100 min-h-screen">
 
 <aside class="w-64 border-r border-slate-900 bg-slate-950/40 h-screen fixed flex flex-col justify-between z-40">
@@ -211,16 +219,16 @@ function getCvPath($app) {
                 <?= strtoupper(substr($company['company_name'], 0, 1)) ?>
             </div>
             <div>
-                <div class="font-bold text-sm text-slate-200">Sofyane_HB_Portal</div>
-                <div class="text-[10px] text-indigo-400 font-semibold uppercase tracking-wider">Espace Recruteur</div>
+                <div class="font-bold text-sm text-slate-200"><?= htmlspecialchars($display_name) ?></div>
+                <div class="text-[10px] text-indigo-400 font-semibold uppercase tracking-wider">Recuriter Dashboard</div>
             </div>
         </div>
         <nav class="p-4 space-y-1.5 text-xs font-medium">
             <a href="dashboard.php"  class="flex items-center px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 rounded-xl transition">Dashboard</a>
-            <a href="profile.php"    class="flex items-center px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 rounded-xl transition">Profil Entreprise</a>
-            <a href="add_job.php"    class="flex items-center px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 rounded-xl transition">Publier une Offre</a>
-            <a href="my_jobs.php"    class="flex items-center px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 rounded-xl transition">Gérer les Postes</a>
-            <a href="applicants.php" class="flex items-center px-3 py-2.5 bg-indigo-600/10 border border-indigo-500/20 text-indigo-400 rounded-xl font-semibold">Candidatures Reçues</a>
+            <a href="profile.php"    class="flex items-center px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 rounded-xl transition">Company profile</a>
+            <a href="add_job.php"    class="flex items-center px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 rounded-xl transition">Publish a Job Offer</a>
+            <a href="my_jobs.php"    class="flex items-center px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 rounded-xl transition">Manage Jobs</a>
+            <a href="applicants.php" class="flex items-center px-3 py-2.5 bg-indigo-600/10 border border-indigo-500/20 text-indigo-400 rounded-xl font-semibold">Applications Received</a>
         </nav>
     </div>
     <div class="p-4 border-t border-slate-900">
@@ -230,80 +238,19 @@ function getCvPath($app) {
 </aside>
 
 <main class="ml-64 flex-1">
-    
-    <nav class="border-b border-slate-900 bg-slate-950/40 backdrop-blur-md sticky top-0 z-30">
-        <div class="flex items-center justify-between px-8 py-3">
-            <div class="text-xs text-slate-500 font-medium">
-                Candidatures Reçues
-            </div>
-            
-            <div class="flex items-center gap-4">
-                <div class="relative">
-                    <button onclick="toggleNotifDropdown()" class="relative p-2 text-slate-400 hover:text-slate-200 transition rounded-lg hover:bg-slate-900/40">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
-                            <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
-                        </svg>
-                        <?php if ($unread_notif_count > 0): ?>
-                        <span class="absolute top-0.5 right-0.5 w-4 h-4 bg-rose-500 text-white text-[9px] font-bold flex items-center justify-center rounded-full animate-pulse">
-                            <?= $unread_notif_count > 9 ? '9+' : $unread_notif_count ?>
-                        </span>
-                        <?php endif; ?>
-                    </button>
-                    
-                    <div id="notifDropdown" class="notif-dropdown absolute right-0 mt-2 w-80 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl shadow-black/50 overflow-hidden z-50">
-                        <div class="px-4 py-3 border-b border-slate-800 flex items-center justify-between">
-                            <span class="text-xs font-bold text-slate-200">Notifications</span>
-                            <?php if ($unread_notif_count > 0): ?>
-                            <a href="?mark_all_read=1" class="text-[10px] text-indigo-400 hover:text-indigo-300">Tout marquer comme lu</a>
-                            <?php endif; ?>
-                        </div>
-                        <div class="max-h-80 overflow-y-auto">
-                            <?php if (empty($company_notifications)): ?>
-                                <div class="p-6 text-center text-slate-500 text-xs">
-                                    Aucune notification
-                                </div>
-                            <?php else: ?>
-                                <?php foreach ($company_notifications as $notif): 
-                                    $isUnread = !$notif['is_read'];
-                                    $bgClass = $isUnread ? 'notif-unread' : '';
-                                ?>
-                                <a href="?read_notif=<?= $notif['id'] ?>" class="block px-4 py-3 hover:bg-slate-800/50 transition <?= $bgClass ?> border-b border-slate-800/50 last:border-0">
-                                    <p class="text-xs text-slate-200 <?= $isUnread ? 'font-semibold' : '' ?> leading-relaxed">
-                                        <?= htmlspecialchars($notif['message']) ?>
-                                    </p>
-                                    <p class="text-[10px] text-slate-500 mt-1">
-                                        <?= date('d M Y à H:i', strtotime($notif['created_at'])) ?>
-                                    </p>
-                                </a>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="flex items-center gap-2 pl-4 border-l border-slate-900">
-                    <div class="w-7 h-7 bg-gradient-to-tr from-indigo-600 to-cyan-500 text-white flex items-center justify-center font-bold text-xs rounded-lg">
-                        <?= strtoupper(substr($company['company_name'], 0, 1)) ?>
-                    </div>
-                    <span class="text-xs font-medium text-slate-300 hidden md:block"><?= htmlspecialchars($company['company_name']) ?></span>
-                </div>
-            </div>
-        </div>
-    </nav>
 
     <div class="p-8 md:p-10">
 
         <?php display_flash(); ?>
 
         <div class="mb-8">
-            <h1 class="text-2xl font-bold text-white">Candidatures Reçues</h1>
-            <p class="text-slate-400 text-sm mt-1">Gérez les candidatures, acceptez ou refusez les profils. <span class="text-indigo-400 font-semibold">📎 Visualisez et téléchargez les CV ci-dessous.</span></p>
+            <h1 class="text-2xl font-bold text-white">Applications Received</h1>
+            <p class="text-slate-400 text-sm mt-1">Manage applications, accept or reject candidate profiles </p>
         </div>
 
         <?php if (empty($applicants)): ?>
             <div class="bg-slate-900/20 border border-slate-900 rounded-2xl p-12 text-center text-slate-500 text-sm">
-                Aucune candidature reçue pour l'instant.
+                No candidates.
             </div>
 
         <?php else: ?>
@@ -320,7 +267,7 @@ function getCvPath($app) {
                     <?php else: ?>
                         <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Actif</span>
                     <?php endif; ?>
-                    <span class="text-xs text-slate-500"><?= count($apps) ?> candidature(s)</span>
+                    <span class="text-xs text-slate-500"><?= count($apps) ?> Candidates(s)</span>
                 </div>
 
                 <div class="bg-slate-900/20 border border-slate-900 rounded-2xl overflow-hidden">
@@ -365,7 +312,7 @@ function getCvPath($app) {
                                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                             </svg>
-                                            Voir / Télécharger CV
+                                            View / Download CV
                                         </a>
                                     <?php else: ?>
                                         <span class="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-800/50 text-slate-500 border border-slate-800 rounded-lg text-xs">
@@ -388,8 +335,8 @@ function getCvPath($app) {
                                             <select name="status" onchange="this.form.submit()"
                                                 class="text-xs font-bold rounded-lg px-3 py-1.5 border cursor-pointer focus:outline-none bg-transparent transition <?= $badge ?>">
                                                 <option value="pending"  <?= $s==='pending' ?'selected':'' ?>>Pending</option>
-                                                <option value="accepted" <?= $s==='accepted'?'selected':'' ?>>Accepted ✓</option>
-                                                <option value="rejected" <?= $s==='rejected'?'selected':'' ?>>Rejected ✗</option>
+                                                <option value="accepted" <?= $s==='accepted'?'selected':'' ?>>Accepted</option>
+                                                <option value="rejected" <?= $s==='rejected'?'selected':'' ?>>Rejected</option>
                                             </select>
                                         </form>
                                     <?php endif; ?>

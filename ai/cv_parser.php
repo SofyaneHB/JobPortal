@@ -95,8 +95,8 @@ class CVParser {
         $errors = [];
         $allowed = ["pdf", "docx", "txt"];
         $ext = strtolower(pathinfo($file["name"], PATHINFO_EXTENSION));
-        if (!in_array($ext, $allowed)) $errors[] = "Format non supporté.";
-        if ($file["size"] > 5 * 1024 * 1024) $errors[] = "Fichier trop volumineux.";
+        if (!in_array($ext, $allowed)) $errors[] = "Unsupported format.";
+        if ($file["size"] > 5 * 1024 * 1024) $errors[] = "File too large.";
         return $errors;
     }
 }

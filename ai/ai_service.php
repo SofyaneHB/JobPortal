@@ -17,7 +17,7 @@ class AIService {
         $text = CVParser::extractText($filePath, $mimeType);
 
         if (empty(trim($text))) {
-            return ["success" => false, "error" => "Impossible d'extraire le texte du CV."];
+            return ["success" => false, "error" => "Unable to extract text from the CV."];
         }
 
         $skills = SkillExtractor::extract($text);
@@ -41,7 +41,7 @@ class AIService {
         $text = CVParser::extractText($filePath, $mimeType);
 
         if (empty(trim($text))) {
-            return ["success" => false, "error" => "Le document est vide ou illisible."];
+            return ["success" => false, "error" => "The document is empty or unreadable."];
         }
 
         $skills = SkillExtractor::extract($text);

@@ -27,8 +27,8 @@ class SkillExtractor {
 
     private static function extractViaGroq(string $text, string $apiKey): array {
         $url = 'https://api.groq.com/openai/v1/chat/completions';
-        $prompt = "Tu es un parseur RH. Analyse ce CV et extrait les mots-clés de compétences (hard & soft skills).\n"
-                . "Réponds STRICTEMENT sous forme d'un tableau JSON de chaînes en minuscules, sans markdown.\n"
+        $prompt = " You are an HR parser. Analyze this CV and extract skill keywords (hard & soft skills).\n"
+                . "Reply STRICTLY as a JSON array of lowercase strings, without markdown.\n"
                 . "Exemple : [\"php\", \"react\", \"git\"]\n\n"
                 . "CV :\n" . substr($text, 0, 6000);
 

@@ -54,7 +54,8 @@ $recent_applicants = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tableau de Bord | Sofyane_HB</title>
+    <title> Company Dashboard</title>
+    <link rel="icon" type="image/png" href="../assets/img/logo_jp.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -70,17 +71,17 @@ $recent_applicants = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?= strtoupper(substr($display_name, 0, 1)) ?>
                 </div>
                 <div>
-                    <div class="font-bold text-sm text-slate-200 tracking-tight">Sofyane_HB_Portal</div>
-                    <div class="text-[10px] text-indigo-400 font-semibold uppercase tracking-wider">Espace Recruteur</div>
+                    <div class="font-bold text-sm text-slate-200 tracking-tight"><?= htmlspecialchars($display_name) ?></div>
+                    <div class="text-[10px] text-indigo-400 font-semibold uppercase tracking-wider">Recuriter Dashboard</div>
                 </div>
             </div>
             
             <nav class="p-4 space-y-1.5 text-xs font-medium">
                 <a href="dashboard.php" class="flex items-center px-3 py-2.5 bg-indigo-600/10 border border-indigo-500/20 text-indigo-400 rounded-xl font-semibold">Dashboard</a>
-                <a href="profile.php" class="flex items-center px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 rounded-xl transition">Profil Entreprise</a>
-                <a href="add_job.php" class="flex items-center px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 rounded-xl transition">Publier une Offre</a>
-                <a href="my_jobs.php" class="flex items-center px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 rounded-xl transition">Gérer les Postes</a>
-                <a href="applicants.php" class="flex items-center px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 rounded-xl transition">Candidatures Reçues</a>
+                <a href="profile.php" class="flex items-center px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 rounded-xl transition">Company Profile</a>
+                <a href="add_job.php" class="flex items-center px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 rounded-xl transition">Publish a Job Offer</a>
+                <a href="my_jobs.php" class="flex items-center px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 rounded-xl transition">Manage Jobs</a>
+                <a href="applicants.php" class="flex items-center px-3 py-2.5 text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 rounded-xl transition">Applocations Received</a>
             </nav>
         </div>
         
@@ -94,12 +95,11 @@ $recent_applicants = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         <div class="relative p-6 bg-slate-900/10 border border-slate-900 rounded-2xl overflow-hidden">
             <div class="absolute -right-16 -top-16 w-48 h-48 bg-indigo-500/5 rounded-full blur-3xl"></div>
-            <div class="text-[11px] font-bold uppercase tracking-wider text-cyan-400 mb-1">Ravi de vous revoir</div>
             <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-white">Welcome, <?= htmlspecialchars($display_name) ?></h1>
             
             <?php if (!empty($display_logo)): ?>
                 <div class="mt-2 flex items-center gap-2 text-xs text-slate-500">
-                    <span>🔗 Logo Link:</span>
+                    <span>Comapny Link:</span>
                     <a href="<?= htmlspecialchars($display_logo) ?>" target="_blank" class="text-indigo-400 hover:underline truncate max-w-xs font-medium">
                         <?= htmlspecialchars($display_logo) ?>
                     </a>
@@ -117,13 +117,11 @@ $recent_applicants = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div class="p-6 bg-slate-900/20 border border-slate-900 rounded-2xl relative overflow-hidden group hover:border-slate-800 transition">
-                <div class="absolute right-4 top-4 text-xs font-bold text-indigo-500/20 group-hover:text-indigo-500/30 transition">OFFRES</div>
                 <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Active Jobs</p>
                 <p class="text-4xl font-bold mt-2 bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent"><?= (int)$active_jobs ?></p>
             </div>
             
             <div class="p-6 bg-slate-900/20 border border-slate-900 rounded-2xl relative overflow-hidden group hover:border-slate-800 transition">
-                <div class="absolute right-4 top-4 text-xs font-bold text-cyan-500/20 group-hover:text-cyan-500/30 transition">TOTAL</div>
                 <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Applicants</p>
                 <p class="text-4xl font-bold mt-2 bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent"><?= (int)$total_applicants ?></p>
             </div>
@@ -134,7 +132,6 @@ $recent_applicants = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="p-6 bg-slate-900/20 border border-slate-900 rounded-2xl space-y-4">
                 <div class="flex items-center justify-between border-b border-slate-900 pb-3">
                     <h2 class="font-bold text-sm uppercase tracking-wider text-slate-200 flex items-center gap-2">
-                        <span class="w-1 h-3 bg-indigo-500 rounded-full"></span>
                         Recent Jobs
                     </h2>
                 </div>
@@ -163,7 +160,6 @@ $recent_applicants = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="p-6 bg-slate-900/20 border border-slate-900 rounded-2xl space-y-4">
                 <div class="flex items-center justify-between border-b border-slate-900 pb-3">
                     <h2 class="font-bold text-sm uppercase tracking-wider text-slate-200 flex items-center gap-2">
-                        <span class="w-1 h-3 bg-cyan-400 rounded-full"></span>
                         Recent Applicants
                     </h2>
                 </div>

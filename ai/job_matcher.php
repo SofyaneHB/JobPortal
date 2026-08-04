@@ -68,15 +68,15 @@ class JobMatcher {
         $matched = array_unique($matched);
         $score = $totalCriteria > 0 ? round((count($matched) / $totalCriteria) * 100) : 50;
         $score = max(10, min(100, $score));
-        if ($score >= 75) $feedback = "Excellent profil !";
-        elseif ($score >= 40) $feedback = "Profil intéressant.";
-        else $feedback = "Des compétences additionnelles seraient un atout.";
+        if ($score >= 75) $feedback = "Excellent profile";
+        elseif ($score >= 40) $feedback = "Interesting profile";
+        else $feedback = "Additional skills would be an asset";
         return ["score" => (int)$score, "feedback" => $feedback];
     }
 
     public function matchSpecificJobWithAI(string $cvText, array $jobData): array {
         $apiKey = $this->getAPIKey();
-        if (!$apiKey) return $this->fallbackLocal($cvText, $jobData, "Aucune clé API");
+        if (!$apiKey) return $this->fallbackLocal($cvText, $jobData, "No API key");
 
         $cvText = substr($cvText, 0, 8000);
         $targetRequirements = [];
@@ -93,12 +93,12 @@ class JobMatcher {
         $url = "https://api.groq.com/openai/v1/chat/completions";
         $model = "llama-3.3-70b-versatile";
 
-        $prompt = "Tu es un système ATS. Évalue ce CV pour le poste de {$jobTitle}.\n\n"
-                . "PRÉREQUIS : {$requirementsStr}\n\n"
+        $prompt = "You are an ATS system. Evaluate this CV for the position of {$jobTitle}.\n\n"
+                . "REQUIREMENTS: {$requirementsStr}\n\n"
                 . "CV :\n{$cvText}\n\n"
-                . "Réponds UNIQUEMENT sous ce format exact :\n"
-                . "SCORE: [nombre entre 0 et 100]\n"
-                . "FEEDBACK: [texte français court]";
+                . "Reply ONLY in this exact format:\n"
+                . "SCORE: [number between 0 and 100]\n"
+                . "FEEDBACK: [short English text]";
 
         $payload = [
             "model" => $model,
@@ -121,18 +121,18 @@ class JobMatcher {
         curl_close($ch);
 
         if ($httpCode !== 200) {
-            return $this->fallbackLocal($cvText, $jobData, "Erreur API HTTP $httpCode");
+            return $this->fallbackLocal($cvText, $jobData, "API Error HTTP $httpCode");
         }
 
         $data = json_decode($response, true);
         if (isset($data['error'])) {
-            return $this->fallbackLocal($cvText, $jobData, "Erreur API");
+            return $this->fallbackLocal($cvText, $jobData, "API Error");
         }
 
         $content = $data['choices'][0]['message']['content'] ?? '';
         
         $score = 0;
-        $feedback = "Analyse indisponible.";
+        $feedback = "No Available Analyse";
         
         if (preg_match('/SCORE:\s*(\d+)/i', $content, $m)) {
             $score = (int)$m[1];
@@ -142,7 +142,7 @@ class JobMatcher {
         }
 
         if ($score === 0) {
-            return $this->fallbackLocal($cvText, $jobData, "Réponse invalide");
+            return $this->fallbackLocal($cvText, $jobData, "Invalid Response ");
         }
 
         return ["score" => $score, "feedback" => $feedback];

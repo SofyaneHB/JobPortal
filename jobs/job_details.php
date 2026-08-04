@@ -229,236 +229,230 @@ function scoreColor($s) {
 ?>
 
 <!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($job['title']); ?> | Détails</title>
+    <title><?php echo htmlspecialchars($job['title']); ?> — Job Details</title>
+    <link rel="icon" type="image/png" href="../assets/img/logo_jp.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .glass {
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-        .glass-strong {
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.06);
-        }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(16px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .anim-up { animation: slideUp 0.5s ease forwards; opacity: 0; }
-        .anim-d1 { animation-delay: 0.08s; }
-        .anim-d2 { animation-delay: 0.16s; }
-        .anim-d3 { animation-delay: 0.24s; }
-        .anim-d4 { animation-delay: 0.32s; }
-
-        .progress-track {
-            height: 6px;
-            background: rgba(255,255,255,0.04);
-            border-radius: 999px;
-            overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%;
-            border-radius: 999px;
-            transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-            position: relative;
-        }
-        .progress-fill::after {
-            content: ''; position: absolute; inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            animation: shimmer 2.5s infinite;
-        }
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        .rec-card { transition: all 0.2s ease; }
-        .rec-card:hover { border-color: rgba(99,102,241,0.25); transform: translateY(-1px); }
-
-        .tag-match {
-            background: rgba(34,197,94,0.1); color: #4ade80; border: 1px solid rgba(34,197,94,0.18);
-            font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 6px;
-        }
-        .tag-miss {
-            background: rgba(234,179,8,0.1); color: #facc15; border: 1px solid rgba(234,179,8,0.18);
-            font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 6px;
-        }
-        .tag-more {
-            background: rgba(255,255,255,0.04); color: #64748b; border: 1px solid rgba(255,255,255,0.06);
-            font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 6px;
-        }
-
-        .alert-box {
-            padding: 12px 14px; border-radius: 10px; font-size: 12px; line-height: 1.55;
-            margin-bottom: 8px; border-left: 3px solid transparent;
-        }
-        .alert-success { background: rgba(34,197,94,0.06); border-left-color: #22c55e; color: #86efac; }
-        .alert-info    { background: rgba(59,130,246,0.06); border-left-color: #3b82f6; color: #93c5fd; }
-        .alert-warning { background: rgba(234,179,8,0.06); border-left-color: #eab308; color: #fde047; }
-        .alert-danger  { background: rgba(239,68,68,0.06); border-left-color: #ef4444; color: #fca5a5; }
-        .alert-tip     { background: rgba(139,92,246,0.06); border-left-color: #8b5cf6; color: #c4b5fd; }
-        .alert-action  { background: rgba(236,72,153,0.06); border-left-color: #ec4899; color: #f9a8d4; }
-
-        .job-rec-card {
             background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(16px);
             border: 1px solid rgba(255,255,255,0.04);
-            border-radius: 14px;
-            padding: 16px;
-            transition: all 0.25s ease;
-        }
-        .job-rec-card:hover {
-            background: rgba(15, 23, 42, 0.7);
-            border-color: rgba(99, 102, 241, 0.25);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
         }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen pb-24 selection:bg-indigo-500 selection:text-white">
+<body class="bg-slate-950 text-slate-100 min-h-screen antialiased selection:bg-indigo-500 selection:text-white">
 
-    <nav class="border-b border-slate-900 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-            <a href="index.php" class="font-extrabold text-transparent bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-lg tracking-tight">
-                Sofyane_HB Jobs
-            </a>
-            <a href="index.php" class="text-xs font-semibold text-slate-400 hover:text-slate-200 transition bg-slate-900 border border-slate-800/80 px-4 py-2 rounded-xl">
-                &larr; Retour aux offres
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-slate-800/50">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="index.php" class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center">
+                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0"/>
+                    </svg>
+                </div>
+                <span class="font-bold text-lg tracking-tight">Jobs <span class="text-indigo-400">Offers</span></span>
             </a>
         </div>
     </nav>
 
-    <main class="max-w-6xl mx-auto px-4 mt-10">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+    <!-- Hero Glow -->
+    <div class="pt-24 relative overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-indigo-600/8 rounded-full blur-[100px] pointer-events-none"></div>
+    </div>
 
-            <div class="lg:col-span-2 space-y-8">
-                <div class="p-6 glass rounded-2xl relative overflow-hidden">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <div class="flex items-center gap-4">
-                            <div class="w-14 h-14 bg-indigo-600/10 border border-indigo-500/20 text-indigo-400 rounded-xl flex items-center justify-center font-bold text-lg uppercase shrink-0">
+    <main class="max-w-6xl mx-auto px-6 pb-24 relative">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+
+            <!-- Left Column -->
+            <div class="lg:col-span-2 space-y-6">
+
+                <!-- Job Header Card -->
+                <div class="glass rounded-2xl p-6 md:p-8">
+                    <div class="flex flex-col md:flex-row md:items-start justify-between gap-5">
+                        <div class="flex items-start gap-4">
+                            <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center font-bold text-lg text-white shadow-lg shadow-indigo-900/20 shrink-0">
                                 <?php echo strtoupper(substr($job['company'], 0, 2)); ?>
                             </div>
-                            <div>
-                                <span class="inline-flex items-center text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-md bg-indigo-500/10 text-indigo-400 border border-indigo-500/10">
-                                    <?php echo htmlspecialchars($display_type); ?>
-                                </span>
-                                <h1 class="text-xl md:text-2xl font-extrabold mt-1 text-white tracking-tight"><?php echo htmlspecialchars($job['title']); ?></h1>
-                                <p class="text-xs text-slate-400 mt-1 font-medium">
-                                    <span class="text-indigo-400 font-semibold"><?php echo htmlspecialchars($job['company']); ?></span> &bull; &#128205; <?php echo htmlspecialchars($job['location']); ?>
+                            <div class="min-w-0">
+                                <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+                                    <span class="inline-flex items-center px-2.5 py-1 rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-[10px] font-bold uppercase tracking-wider">
+                                        <?php echo htmlspecialchars($display_type); ?>
+                                    </span>
+                                    <?php if ((int)$job['applicants'] > 0): ?>
+                                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-slate-800/60 text-slate-400 text-[10px] font-semibold">
+                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/>
+                                        </svg>
+                                        <?php echo (int)$job['applicants']; ?> applicants
+                                    </span>
+                                    <?php endif; ?>
+                                </div>
+                                <h1 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight leading-tight">
+                                    <?php echo htmlspecialchars($job['title']); ?>
+                                </h1>
+                                <p class="text-sm text-slate-400 mt-1.5 flex items-center gap-1.5 flex-wrap">
+                                    <span class="text-indigo-400 font-semibold"><?php echo htmlspecialchars($job['company']); ?></span>
+                                    <span class="text-slate-600">&bull;</span>
+                                    <span class="flex items-center gap-1">
+                                        <?php echo htmlspecialchars($job['location']); ?>
+                                    </span>
                                 </p>
                             </div>
                         </div>
-                        <div class="text-left md:text-right text-xs text-slate-400 space-y-1 border-t md:border-t-0 pt-3 md:pt-0 border-slate-800">
-                            <div>&#128176; <span class="text-slate-200 font-bold"><?php echo htmlspecialchars($job['salary']); ?></span></div>
-                            <div>&#128197; <span class="text-slate-300"><?php echo htmlspecialchars($job['created_at']); ?></span></div>
-                            <div>&#128293; Candidats : <span class="text-indigo-400 font-bold"><?php echo (int)$job['applicants']; ?></span></div>
+                        <div class="flex flex-row md:flex-col gap-3 md:gap-2 text-xs text-slate-400 md:text-right shrink-0">
+                            <div class="flex items-center md:justify-end gap-1.5 px-3 py-2 rounded-xl bg-slate-950/40 border border-slate-800/60">
+                               
+                                <span class="text-slate-200 font-semibold"><?php echo htmlspecialchars($job['salary'] ?: 'Negotiable'); ?> Dhs</span>
+                            </div>
+                            <div class="flex items-center md:justify-end gap-1.5 px-3 py-2 rounded-xl bg-slate-950/40 border border-slate-800/60">
+                                
+                                <?php echo htmlspecialchars($job['created_at']); ?>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="space-y-3">
-                    <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-2">
-                        <span class="w-1 h-3 bg-indigo-500 rounded-full"></span>
-                        Description du poste & missions
-                    </h2>
-                    <div class="text-slate-300 text-sm leading-relaxed glass p-6 rounded-2xl whitespace-pre-line">
-                        <p class="mb-4"><?php echo htmlspecialchars($job['description']); ?></p>
-                        <div class="mt-4 font-semibold flex items-center gap-1.5 text-xs uppercase tracking-wider text-slate-400">
-                            <span>&#127919;</span> Taches quotidiennes :
+                <!-- Description -->
+                <div class="glass rounded-2xl p-6 md:p-8 space-y-5">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
+                            <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
                         </div>
-                        <ul class="list-disc pl-5 mt-2 space-y-2 text-xs text-slate-400">
-                            <?php foreach($job['tasks'] as $task): ?>
-                                <li><?php echo htmlspecialchars($task); ?></li>
-                            <?php endforeach; ?>
-                        </ul>
+                        <h2 class="text-sm font-bold text-white uppercase tracking-wider">Job Description</h2>
+                    </div>
+                    <div class="text-sm text-slate-300 leading-relaxed whitespace-pre-line">
+                        <?php echo htmlspecialchars($job['description']); ?>
                     </div>
                 </div>
 
-                <div class="space-y-3">
-                    <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-2">
-                        <span class="w-1 h-3 bg-cyan-400 rounded-full"></span>
-                        Profil recherche & competences requises
-                    </h2>
-                    <div class="glass rounded-2xl p-6 space-y-4">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pb-3 border-b border-slate-800/60 text-xs">
-                            <div>&#127891; <span class="text-slate-400">Education :</span> <span class="text-slate-200 font-semibold"><?php echo htmlspecialchars($job['education']); ?></span></div>
-                            <div>&#9889; <span class="text-slate-400">Experience :</span> <span class="text-slate-200 font-semibold"><?php echo htmlspecialchars($job['experience']); ?></span></div>
+                <!-- Tasks -->
+                <div class="glass rounded-2xl p-6 md:p-8 space-y-5">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
+                            <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                            </svg>
                         </div>
-                        <div class="space-y-2.5">
-                            <?php foreach ($job['requirements'] as $req): ?>
-                                <div class="flex items-start gap-3 text-xs text-slate-400">
-                                    <svg class="w-4 h-4 text-cyan-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path>
-                                    </svg>
-                                    <span><?php echo htmlspecialchars(trim($req)); ?></span>
-                                </div>
-                            <?php endforeach; ?>
+                        <h2 class="text-sm font-bold text-white uppercase tracking-wider">Daily Tasks</h2>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <?php foreach($job['tasks'] as $task): ?>
+                        <div class="flex items-start gap-3 p-3.5 rounded-xl bg-slate-950/40 border border-slate-800/60">
+                            <div class="w-5 h-5 rounded-md bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center shrink-0 mt-0.5">
+                                <svg class="w-3 h-3 text-indigo-400" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm text-slate-300"><?php echo htmlspecialchars(trim($task)); ?></span>
                         </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
 
+                <!-- Requirements -->
+                <div class="glass rounded-2xl p-6 md:p-8 space-y-5">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
+                            <svg class="w-4 h-4 text-violet-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 019 9v.375M10.125 2.25A3.375 3.375 0 0113.875 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 013.375 3.375M9 15l2.25 2.25L15 12"/>
+                            </svg>
+                        </div>
+                        <h2 class="text-sm font-bold text-white uppercase tracking-wider">Requirements</h2>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+                        <div class="p-4 rounded-xl bg-slate-950/40 border border-slate-800/60">
+                            <div class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-1">Education</div>
+                            <div class="text-sm text-slate-200 font-medium"><?php echo htmlspecialchars($job['education']); ?></div>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-950/40 border border-slate-800/60">
+                            <div class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-1">Experience</div>
+                            <div class="text-sm text-slate-200 font-medium"><?php echo htmlspecialchars($job['experience']); ?></div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <?php foreach ($job['requirements'] as $req): ?>
+                        <div class="flex items-start gap-3 text-sm text-slate-300">
+                            <div class="w-5 h-5 rounded-full bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center shrink-0 mt-0.5">
+                                <svg class="w-3 h-3 text-cyan-400" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+                                </svg>
+                            </div>
+                            <span><?php echo htmlspecialchars(trim($req)); ?></span>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <!-- Recommended Jobs -->
                 <?php if (!empty($recommended_jobs)): ?>
-                <div class="space-y-5 pt-6 border-t border-slate-800/40">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                            <span class="text-lg">&#128188;</span>
-                            <h2 class="text-sm font-extrabold text-white tracking-tight uppercase">
-                                Offres recommandees selon votre CV
-                            </h2>
+                <div class="pt-4">
+                    <div class="flex items-center justify-between mb-5">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+                                <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H4.5a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 109.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1114.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-sm font-bold text-white uppercase tracking-wider">Recommended for you</h2>
                         </div>
-                        <span class="text-[10px] text-slate-500 bg-slate-900 border border-slate-800 px-2 py-1 rounded-lg">
-                            <?php echo count($recommended_jobs); ?> offres
+                        <span class="text-[10px] text-slate-500 bg-slate-900 border border-slate-800 px-2.5 py-1 rounded-lg font-semibold">
+                            <?php echo count($recommended_jobs); ?> jobs
                         </span>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <?php foreach ($recommended_jobs as $match): 
                             $rj = $match['job'];
                             $r_score = (int)$match['score'];
                             $r_colors = scoreColor($r_score);
                         ?>
-                        <a href="job_details.php?id=<?php echo (int)$rj['id']; ?>" class="job-rec-card group block">
-                            <div class="flex items-start justify-between mb-2">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-9 h-9 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-indigo-400 font-bold text-[10px] uppercase">
+                        <a href="job_details.php?id=<?php echo (int)$rj['id']; ?>" class="glass glass-hover rounded-2xl p-5 block group">
+                            <div class="flex items-start justify-between mb-3">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    <div class="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-indigo-400 font-bold text-xs uppercase shrink-0">
                                         <?php echo strtoupper(substr($rj['company_name'] ?? 'JO', 0, 2)); ?>
                                     </div>
                                     <div class="min-w-0">
-                                        <h3 class="text-xs font-bold text-slate-100 group-hover:text-indigo-300 transition truncate">
+                                        <h3 class="text-sm font-bold text-slate-100 group-hover:text-indigo-300 transition truncate">
                                             <?php echo htmlspecialchars($rj['title']); ?>
                                         </h3>
-                                        <p class="text-[10px] text-slate-500 truncate"><?php echo htmlspecialchars($rj['company_name'] ?? 'Entreprise'); ?></p>
+                                        <p class="text-[11px] text-slate-500 truncate"><?php echo htmlspecialchars($rj['company_name'] ?? 'Entreprise'); ?></p>
                                     </div>
                                 </div>
-                                <span class="text-[10px] font-extrabold px-2 py-1 rounded-md <?php echo $r_colors['bg'] . ' ' . $r_colors['text']; ?> shrink-0">
+                                <span class="text-[10px] font-extrabold px-2 py-1 rounded-lg <?php echo $r_colors['bg'] . ' ' . $r_colors['text']; ?> shrink-0">
                                     <?php echo $r_score; ?>%
                                 </span>
                             </div>
-
                             <div class="progress-track mb-3">
                                 <div class="progress-fill bg-gradient-to-r <?php echo $r_colors['bar']; ?>" style="width: <?php echo $r_score; ?>%"></div>
                             </div>
-
-                            <div class="flex items-center justify-between text-[10px] text-slate-400 mb-2">
-                                <span>&#128205; <?php echo htmlspecialchars($rj['location'] ?? 'Remote'); ?></span>
-                                <span class="text-indigo-400 font-semibold"><?php echo htmlspecialchars($rj['salary'] ?? 'A negocier'); ?></span>
+                            <div class="flex items-center justify-between text-[11px] text-slate-400">
+                                <span class="flex items-center gap-1">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                    </svg>
+                                    <?php echo htmlspecialchars($rj['location'] ?? 'Remote'); ?>
+                                </span>
+                                <span class="text-slate-200 font-semibold"><?php echo htmlspecialchars($rj['salary'] ?? 'Negotiable'); ?></span>
                             </div>
-
                             <?php if (!empty($match['matched_list'])): ?>
-                            <div class="flex flex-wrap gap-1 items-center">
-                                <span class="text-[10px] text-slate-500 mr-1"><?php echo count($match['matched_list']); ?> match</span>
+                            <div class="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-slate-800/40">
                                 <?php foreach (array_slice($match['matched_list'], 0, 3) as $sk): ?>
-                                    <span class="text-[9px] bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded border border-emerald-500/15"><?php echo htmlspecialchars($sk); ?></span>
+                                    <span class="text-[10px] bg-emerald-500/8 text-emerald-400 px-2 py-0.5 rounded-md border border-emerald-500/15 font-medium"><?php echo htmlspecialchars($sk); ?></span>
                                 <?php endforeach; ?>
                                 <?php if (count($match['matched_list']) > 3): ?>
-                                    <span class="text-[9px] text-slate-600">+<?php echo count($match['matched_list']) - 3; ?></span>
+                                    <span class="text-[10px] text-slate-600 font-medium">+<?php echo count($match['matched_list']) - 3; ?></span>
                                 <?php endif; ?>
                             </div>
                             <?php endif; ?>
@@ -470,31 +464,39 @@ function scoreColor($s) {
 
             </div>
 
+            <!-- Right Column: Sticky Sidebar -->
             <div class="lg:col-span-1 lg:sticky lg:top-24 space-y-5">
-                <div class="p-6 glass-strong rounded-2xl space-y-5">
-                    <h3 class="font-extrabold text-sm text-slate-200 uppercase tracking-wider">Candidature express IA</h3>
+
+                <!-- Apply Card -->
+                <div class="glass rounded-2xl p-6 space-y-5">
+                    <div class="flex items-center gap-3">
+                     
+                        <h3 class="text-sm font-bold text-white uppercase tracking-wider">Apply Now</h3>
+                    </div>
+                    
                     <form method="POST" enctype="multipart/form-data" class="space-y-4" id="applicationForm">
                         <input type="hidden" name="job_id" value="<?php echo (int)$job['id']; ?>">
-                        <div>
-                            <div class="relative group cursor-pointer border border-dashed border-slate-700 hover:border-indigo-500/50 bg-slate-950 rounded-xl p-4 text-center transition">
-                                <input type="file" name="cv_file" required accept=".pdf" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" id="cvInput">
-                                <div class="space-y-1">
-                                    <div class="text-xl" id="uploadIcon">&#128196;</div>
-                                    <div class="text-xs font-semibold text-slate-400 group-hover:text-slate-200 transition" id="fileNameDisplay">Choisir un fichier PDF</div>
-                                </div>
+                        
+                        <div class="relative group cursor-pointer">
+                            <input type="file" name="cv_file" required accept=".pdf" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" id="cvInput">
+                            <div class="border border-dashed border-slate-700 hover:border-indigo-500/40 bg-slate-950/40 rounded-xl p-5 text-center transition-all group-hover:bg-slate-950/60">
+                                <div class="text-xs font-semibold text-slate-400 transition" id="fileNameDisplay">Upload your CV (PDF)</div>
+                                <div class="text-[10px] text-slate-600 mt-1">Click or drag & drop</div>
                             </div>
                         </div>
-                        <div class="grid grid-cols-2 gap-2">
-                            <button type="submit" name="action" value="analyze" class="bg-slate-800 hover:bg-slate-700 font-bold uppercase tracking-wider text-[10px] rounded-xl py-3.5 text-slate-200 transition">
-                                Analyser CV
+
+                        <div class="grid grid-cols-2 gap-2.5 ">
+                            <button type="submit" name="action" value="analyze" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-[11px] uppercase tracking-wider rounded-xl py-3 transition active:scale-[0.97]">
+                                Analyze
                             </button>
-                            <button type="submit" name="action" value="apply" class="bg-indigo-600 hover:bg-indigo-500 font-bold uppercase tracking-wider text-[10px] rounded-xl py-3.5 text-white shadow-lg shadow-indigo-600/20 transition">
-                                Postuler
+                            <button type="submit" name="action" value="apply" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-[11px] uppercase tracking-wider rounded-xl py-3 transition shadow-lg shadow-indigo-600/20 active:scale-[0.97]">
+                                Apply
                             </button>
                         </div>
                     </form>
                 </div>
 
+                <!-- AI Results -->
                 <?php if ($ai_result): ?>
                     <?php
                     $score = (int)$ai_result['score'];
@@ -502,48 +504,50 @@ function scoreColor($s) {
                     $rec = $ai_result['recommendations'] ?? null;
                     ?>
 
-                    <div class="p-5 rec-card glass-strong rounded-2xl anim-up anim-d1">
-                        <div class="flex items-center justify-between mb-3">
-                            <div class="flex items-center gap-2.5">
-                                <div class="w-8 h-8 rounded-lg <?php echo $colors['bg']; ?> border <?php echo $colors['border']; ?> flex items-center justify-center text-sm">
-                                    <?php echo $score >= 75 ? '&#127775;' : ($score >= 50 ? '&#9989;' : ($score >= 30 ? '&#9888;&#65039;' : '&#128218;')); ?>
-                                </div>
+                    <!-- Score Card -->
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
                                 <div>
-                                    <div class="text-xs font-bold text-slate-200 uppercase tracking-wider">Match IA</div>
-                                    <div class="text-[10px] text-slate-500">Base sur votre CV</div>
+                                    <div class="text-xs font-bold text-white uppercase tracking-wider">AI Match</div>
                                 </div>
                             </div>
-                            <span class="text-lg font-extrabold <?php echo $colors['text']; ?>"><?php echo $score; ?>%</span>
+                            <span class="text-2xl font-extrabold <?php echo $colors['text']; ?>"><?php echo $score; ?>%</span>
                         </div>
                         <div class="progress-track mb-4">
                             <div class="progress-fill bg-gradient-to-r <?php echo $colors['bar']; ?>" style="width: <?php echo $score; ?>%"></div>
                         </div>
-                        <p class="text-[11px] text-slate-400 leading-relaxed">
+                        <p class="text-xs text-slate-400 leading-relaxed">
                             <?php echo htmlspecialchars($ai_result['feedback']); ?>
                         </p>
                     </div>
 
                     <?php if (!empty($rec)): ?>
-                        <div class="p-5 rec-card glass-strong rounded-2xl anim-up anim-d2">
-                            <div class="flex items-center gap-2 mb-3">
-                                <span class="text-sm">&#127919;</span>
-                                <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">Recommandations</span>
+                        <!-- Recommendations -->
+                        <div class="glass rounded-2xl p-6 space-y-4">
+                            <div class="flex items-center gap-3">
+                                <h3 class="text-xs font-bold text-white uppercase tracking-wider">Recommendations</h3>
                             </div>
 
-                            <?php if (!empty($rec['general_advice'])): ?>
-                                <?php foreach ($rec['general_advice'] as $advice): ?>
-                                    <div class="alert-box alert-<?php echo $advice['type']; ?>">
-                                        <?php echo htmlspecialchars($advice['message']); ?>
-                                    </div>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
+                            <div class="text-xs">
+                                <?php if (!empty($rec['general_advice'])): ?>
+                                    <?php foreach ($rec['general_advice'] as $advice): ?>
+                                        <div class="alert-box alert-<?php echo $advice['type']; ?>">
+                                            <?php echo htmlspecialchars($advice['message']); ?>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </div>
 
                             <?php if (!empty($rec['priority_actions'])): ?>
-                                <div class="mt-3 bg-indigo-500/[0.04] border border-indigo-500/10 rounded-lg p-3">
-                                    <div class="text-[10px] font-bold text-indigo-400 uppercase tracking-wider mb-2">&#9889; Actions prioritaires</div>
-                                    <ul class="space-y-1.5">
+                                <div class="bg-indigo-500/[0.04] border border-indigo-500/10 rounded-xl p-4">
+                                    <div class="text-[10px] font-bold text-indigo-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                                        
+                                        Priority Actions
+                                    </div>
+                                    <ul class="space-y-2">
                                         <?php foreach ($rec['priority_actions'] as $action): ?>
-                                            <li class="text-[11px] text-slate-300 flex items-start gap-2">
+                                            <li class="text-xs text-slate-300 flex items-start gap-2">
                                                 <span class="text-indigo-400 mt-0.5 text-[10px]">&#9656;</span>
                                                 <?php echo htmlspecialchars($action); ?>
                                             </li>
@@ -553,63 +557,73 @@ function scoreColor($s) {
                             <?php endif; ?>
                         </div>
 
+                        <!-- Skills Analysis -->
                         <?php if (!empty($rec['matched_skills']) || !empty($rec['missing_skills'])): ?>
-                        <div class="p-5 rec-card glass-strong rounded-2xl anim-up anim-d3">
-                            <div class="flex items-center gap-2 mb-4">
-                                <span class="text-sm">&#128269;</span>
-                                <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">Analyse des competences</span>
+                        <div class="glass rounded-2xl p-6 space-y-5">
+                            <div class="flex items-center gap-3">
+                                <h3 class="text-xs font-bold text-white uppercase tracking-wider">Skills Analysis</h3>
                             </div>
 
                             <?php if (!empty($rec['matched_skills'])): ?>
-                                <div class="mb-4">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="text-[11px] font-semibold text-emerald-400">&#9989; Competences alignees</span>
-                                        <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded font-bold"><?php echo count($rec['matched_skills']); ?></span>
+                                <div>
+                                    <div class="flex items-center justify-between mb-2.5">
+                                        <span class="text-[11px] font-semibold text-emerald-400 flex items-center gap-1.5">
+                                            Matched
+                                        </span>
+                                        <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded-md font-bold border border-emerald-500/15"><?php echo count($rec['matched_skills']); ?></span>
                                     </div>
                                     <div class="flex flex-wrap gap-1.5">
                                         <?php foreach ($rec['matched_skills'] as $skill): ?>
-                                            <span class="tag-match"><?php echo htmlspecialchars($skill); ?></span>
+                                            <span class="tag-match text-[11px] font-semibold px-2.5 py-1 rounded-md"><?php echo htmlspecialchars($skill); ?></span>
                                         <?php endforeach; ?>
                                     </div>
                                 </div>
                             <?php endif; ?>
 
                             <?php if (!empty($rec['missing_skills'])): ?>
-                                <div class="pt-3 border-t border-slate-800/50">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="text-[11px] font-semibold text-amber-400">&#128218; A developper</span>
-                                        <span class="text-[10px] bg-amber-500/10 text-amber-400 px-1.5 py-0.5 rounded font-bold"><?php echo count($rec['missing_skills']); ?></span>
+                                <div class="pt-4 border-t border-slate-800/50">
+                                    <div class="flex items-center justify-between mb-2.5">
+                                        <span class="text-[11px] font-semibold text-amber-400 flex items-center gap-1.5">
+                                            To Develop
+                                        </span>
                                     </div>
                                     <div class="flex flex-wrap gap-1.5">
                                         <?php foreach (array_slice($rec['missing_skills'], 0, 8) as $skill): ?>
-                                            <span class="tag-miss"><?php echo htmlspecialchars($skill); ?></span>
+                                            <span class="tag-miss text-[11px] font-semibold px-2.5 py-1 rounded-md"><?php echo htmlspecialchars($skill); ?></span>
                                         <?php endforeach; ?>
                                         <?php if (count($rec['missing_skills']) > 8): ?>
-                                            <span class="tag-more">+<?php echo count($rec['missing_skills']) - 8; ?></span>
+                                            <span class="tag-more text-[11px] font-semibold px-2.5 py-1 rounded-md">+<?php echo count($rec['missing_skills']) - 8; ?></span>
                                         <?php endif; ?>
                                     </div>
                                 </div>
                             <?php endif; ?>
 
                             <?php if (!empty($rec['estimated_learning_time'])): ?>
-                                <div class="flex items-center gap-2 mt-4 pt-3 border-t border-slate-800/30 text-[11px] text-slate-400">
-                                    <span>&#9201;</span>
-                                    <span>Estimation : <span class="text-slate-200 font-semibold"><?php echo htmlspecialchars($rec['estimated_learning_time']); ?></span></span>
+                                <div class="flex items-center gap-2 pt-3 border-t border-slate-800/30 text-[11px] text-slate-400">
+                                    <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    Estimated learning: <span class="text-slate-200 font-semibold"><?php echo htmlspecialchars($rec['estimated_learning_time']); ?></span>
                                 </div>
                             <?php endif; ?>
                         </div>
                         <?php endif; ?>
 
+                        <!-- Specific Tips -->
                         <?php if (!empty($rec['specific_tips'])): ?>
-                        <div class="p-5 rec-card glass-strong rounded-2xl anim-up anim-d3 border-amber-500/10">
-                            <div class="flex items-center gap-2 mb-3">
-                                <span class="text-sm">&#128161;</span>
-                                <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">Conseils pour ce poste</span>
+                        <div class="glass rounded-2xl p-6 space-y-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-pink-500/10 border border-pink-500/20 flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-pink-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"/>
+                                    </svg>
+                                </div>
+                                <h3 class="text-xs font-bold text-white uppercase tracking-wider">Tips for this role</h3>
                             </div>
-                            <ul class="space-y-2.5">
+                            <ul class="space-y-3">
                                 <?php foreach ($rec['specific_tips'] as $tip): ?>
-                                    <li class="text-[11px] text-slate-300 leading-relaxed flex items-start gap-2">
-                                        <span class="text-amber-400 mt-0.5 shrink-0">&bull;</span>
+                                    <li class="text-xs text-slate-300 leading-relaxed flex items-start gap-2.5">
+                                        <span class="w-1 h-1 rounded-full bg-pink-400 mt-1.5 shrink-0"></span>
                                         <?php echo htmlspecialchars($tip); ?>
                                     </li>
                                 <?php endforeach; ?>
@@ -617,18 +631,18 @@ function scoreColor($s) {
                         </div>
                         <?php endif; ?>
 
+                        <!-- Competitiveness -->
                         <?php if (!empty($rec['competitiveness'])): ?>
-                        <div class="p-4 rec-card glass-strong rounded-2xl anim-up anim-d4">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="text-sm">&#128202;</span>
-                                <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">Votre positionnement</span>
+                        <div class="glass rounded-2xl p-5">
+                            <div class="flex items-center gap-3 mb-3">
+                                
+                                <h3 class="text-xs font-bold text-white uppercase tracking-wider">Positioning</h3>
                             </div>
                             <div class="text-center py-2">
-                                <div class="text-sm font-bold
-                                    <?php echo $rec['competitiveness']['level'] === 'high' ? 'text-emerald-400' : ($rec['competitiveness']['level'] === 'medium' ? 'text-amber-400' : 'text-rose-400'); ?>">
+                                <div class="text-sm font-bold <?php echo $rec['competitiveness']['level'] === 'high' ? 'text-emerald-400' : ($rec['competitiveness']['level'] === 'medium' ? 'text-amber-400' : 'text-rose-400'); ?>">
                                     <?php echo htmlspecialchars($rec['competitiveness']['advice']); ?>
                                 </div>
-                                <div class="text-[10px] text-slate-500 mt-1">Ratio match / lacunes : <?php echo $rec['competitiveness']['ratio']; ?></div>
+                                <div class="text-[10px] text-slate-500 mt-1">Match ratio: <?php echo $rec['competitiveness']['ratio']; ?></div>
                             </div>
                         </div>
                         <?php endif; ?>
@@ -645,7 +659,10 @@ function scoreColor($s) {
         const fileNameDisplay = document.getElementById('fileNameDisplay');
         if(cvInput) {
             cvInput.addEventListener('change', function() {
-                if(this.files.length > 0) fileNameDisplay.textContent = this.files[0].name;
+                if(this.files.length > 0) {
+                    fileNameDisplay.textContent = this.files[0].name;
+                    fileNameDisplay.classList.add('text-indigo-400');
+                }
             });
         }
     </script>

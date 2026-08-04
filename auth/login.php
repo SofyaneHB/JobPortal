@@ -59,8 +59,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION['company_id'] = $pdo->lastInsertId();
         }
 
-        set_flash("success", "Welcome " . $user['full_name']);
-
         if ($_SESSION['user_role'] === 'admin') {
             header("Location: ../admin/dashboard.php");
             exit;

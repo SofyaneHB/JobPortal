@@ -1,12 +1,17 @@
+# Environnement
 .env
 
-# Playwright
-/playwright-report/
-/test-results/
-/tests/
-playwright.config.js
-
-# Node
+# Dependencies
 /node_modules/
-package-lock.json
+vendor/
 
+# General Files
+output.css
+/test-results
+/playwright-report
+
+# Uploads
+uploads/
+
+# DataBase
+database.sql

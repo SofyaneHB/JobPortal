@@ -15,6 +15,7 @@ unset($_SESSION['error']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Set Password</title>
+    <link rel="icon" type="image/png" href="../assets/img/logo_jp.png">
     <link href="../output.css" rel="stylesheet">
 </head>
 <body class="min-h-screen bg-gray-100 flex items-center justify-center p-6 antialiased">

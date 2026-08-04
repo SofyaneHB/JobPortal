@@ -9,6 +9,7 @@ require_login(['candidate']);
 $user_id = $_SESSION['user_id'];
 
 // Récupère l'ID du poste (GET ou POST)
+
 $job_id = $_GET['id'] ?? $_POST['job_id'] ?? null;
 
 if (!$job_id) {
@@ -18,6 +19,7 @@ if (!$job_id) {
 }
 
 // Vérifie s'il a déjà postulé
+
 $stmt = $pdo->prepare("SELECT id FROM applications WHERE job_id = ? AND candidate_id = ?");
 $stmt->execute([$job_id, $user_id]);
 
@@ -27,7 +29,7 @@ if ($stmt->rowCount() > 0) {
     exit;
 }
 
-// ── Insertion de la candidature ──
+// Insertion de la candidature
 try {
     $stmt = $pdo->prepare("
         INSERT INTO applications (job_id, candidate_id, status, applied_at)
@@ -36,9 +38,7 @@ try {
     $stmt->execute([$job_id, $user_id]);
     $application_id = $pdo->lastInsertId();
 
-    // ═══════════════════════════════════════
     //  UPLOAD DU CV — DÉPLACÉ AVANT LE EXIT
-    // ═══════════════════════════════════════
     if (isset($_FILES['cv_file']) && $_FILES['cv_file']['error'] === UPLOAD_ERR_OK) {
         $uploadDir = "../uploads/cv/";
         
