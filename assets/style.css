@@ -1,0 +1,61 @@
+.dd { 
+    position: relative; 
+}
+
+.dd-btn {
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between;
+    padding: 1rem; 
+    background: #f9fafb; 
+    border: 1px solid #e5e7eb;
+    border-radius: .75rem; 
+    color: #111827; 
+    cursor: pointer; 
+    transition: .2s;
+}
+
+.dd-btn:hover, .dd-btn.open { 
+    background: #fff; 
+    border-color: #000; 
+    box-shadow: 0 0 0 2px #f3f4f6; 
+}
+
+.dd-btn svg { 
+    transition: .2s; 
+}
+
+.dd-btn.open svg { 
+    transform: rotate(180deg); 
+}
+
+.dd-list {
+    position: absolute; 
+    top: calc(100% + .5rem); 
+    left: 0; 
+    right: 0;
+    background: #fff; border: 1px solid #e5e7eb; border-radius: .75rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,.1); opacity: 0; visibility: hidden;
+    transform: translateY(-8px); transition: .2s; z-index: 50; overflow: hidden; padding: .5rem 0;
+}
+
+.dd-list.show { 
+    opacity: 1; 
+    visibility: visible; 
+    transform: translateY(0); 
+}
+
+.dd-item { 
+    padding: .75rem 1.25rem; 
+    cursor: pointer; 
+    transition: .15s; 
+}
+
+.dd-item:hover { 
+    background: #f3f4f6; 
+}
+
+.dd-item.sel { 
+    background: #111827; 
+    color: #fff; 
+}
