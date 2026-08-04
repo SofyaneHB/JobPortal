@@ -10,7 +10,7 @@ require_login(['candidate']);
 $userId = $_SESSION['user_id'];
 
 if (!isset($_FILES['cv_file'])) {
-    $_SESSION['ai_error'] = "Aucun fichier reçu.";
+    $_SESSION['ai_error'] = "No file received";
     header("Location: ../candidate/applications.php");
     exit;
 }
@@ -34,7 +34,7 @@ if (move_uploaded_file($file["tmp_name"], $path)) {
     $ai = new AIService($pdo);
     $_SESSION['ai_result'] = $ai->analyzeCV($userId, $path, $file['type']);
 } else {
-    $_SESSION['ai_error'] = "Erreur d'écriture sur le serveur.";
+    $_SESSION['ai_error'] = "Server write error";
 }
 
 

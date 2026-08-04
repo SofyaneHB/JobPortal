@@ -57,58 +57,58 @@ class RecommendationEngine {
         if ($currentScore >= 85) {
             $recommendations[] = [
                 'type' => 'success',
-                'message' => "Excellent match ! Votre profil correspond tres bien a ce poste."
+                'message' => "Excellent match! Your profile fits this position very well"
             ];
             if (!empty($matched)) {
                 $recommendations[] = [
                     'type' => 'tip',
-                    'message' => "Mettez en avant vos competences en " . $this->formatList(array_slice($matched, 0, 3)) . " dans votre lettre de motivation."
+                    'message' => "Highlight your skills in " . $this->formatList(array_slice($matched, 0, 3)) . "in your cover letter "
                 ];
-                $priorityActions[] = "Postulez rapidement, vous etes un candidat ideal";
-                $priorityActions[] = "Preparez des exemples concrets de projets utilisant " . $this->formatList(array_slice($matched, 0, 3));
+                $priorityActions[] = "Apply quickly, you are an ideal candidate";
+                $priorityActions[] = "Prepare concrete project examples using " . $this->formatList(array_slice($matched, 0, 3));
             }
         } elseif ($currentScore >= 60) {
             $recommendations[] = [
                 'type' => 'info',
-                'message' => "Bon match. Vous avez les competences cles pour ce poste."
+                'message' => "Good match. You have the key skills for this position"
             ];
             if (!empty($missing)) {
                 $recommendations[] = [
                     'type' => 'warning',
-                    'message' => "Pour renforcer votre candidature, mentionnez toute experience avec " . $this->formatList(array_slice($missing, 0, 3)) . "."
+                    'message' => "To strengthen your application, mention any experience with " . $this->formatList(array_slice($missing, 0, 3)) . "."
                 ];
             }
             if (!empty($matched)) {
-                $priorityActions[] = "Soulignez votre expertise en " . $this->formatList($matched);
+                $priorityActions[] = "Emphasize your expertise in " . $this->formatList($matched);
             }
             if (!empty($missing)) {
-                $priorityActions[] = "Preparez-vous a expliquer comment vous pourriez combler les lacunes en " . $this->formatList(array_slice($missing, 0, 2));
+                $priorityActions[] = "Be prepared to explain how you could fill the gaps in " . $this->formatList(array_slice($missing, 0, 2));
             }
         } elseif ($currentScore >= 40) {
             $recommendations[] = [
                 'type' => 'warning',
-                'message' => "Match partiel. Vous avez quelques competences requises mais des lacunes existent."
+                'message' => "Partial match. You have some required skills but gaps exist "
             ];
             $recommendations[] = [
                 'type' => 'action',
-                'message' => "Competences prioritaires a developper : " . $this->formatList(array_slice($missing, 0, 5)) . "."
+                'message' => "Priority skills to develop : " . $this->formatList(array_slice($missing, 0, 5)) . "."
             ];
             if (!empty($missing)) {
-                $priorityActions[] = "Suivez une formation rapide sur " . $this->formatList(array_slice($missing, 0, 2));
+                $priorityActions[] = "Take a quick course on " . $this->formatList(array_slice($missing, 0, 2));
             }
-            $priorityActions[] = "Mettez en avant vos competences transferables";
+            $priorityActions[] = "Highlight your transferable skills";
         } else {
             $recommendations[] = [
                 'type' => 'danger',
-                'message' => "Match faible. Ce poste necessite des competences que vous ne maitrisez pas encore."
+                'message' => "Weak match. This position requires skills you haven't mastered yet "
             ];
             $recommendations[] = [
                 'type' => 'action',
-                'message' => "Pour viser ce type de poste, concentrez-vous sur : " . $this->formatList(array_slice($missing, 0, 5)) . "."
+                'message' => "To target this type of position, focus on: " . $this->formatList(array_slice($missing, 0, 5)) . "."
             ];
-            $priorityActions[] = "Envisagez un poste junior ou une alternance dans ce domaine";
+            $priorityActions[] = "Consider a junior position or apprenticeship in this field ";
             if (!empty($missing)) {
-                $priorityActions[] = "Creez un projet personnel utilisant " . $this->formatList(array_slice($missing, 0, 3));
+                $priorityActions[] = "Create a personal project using " . $this->formatList(array_slice($missing, 0, 3));
             }
         }
 
@@ -555,8 +555,8 @@ class RecommendationEngine {
         return [
             'level' => $score >= 70 ? 'high' : ($score >= 50 ? 'medium' : 'low'),
             'advice' => $ratio >= 1 
-                ? 'Vous etes competitif pour ce poste' 
-                : 'Renforcez votre profil avant de postuler',
+                ? 'You are competitive for this position ' 
+                : 'Strengthen your profile before applying',
             'ratio' => round($ratio, 2)
         ];
     }
