@@ -31,7 +31,7 @@ unset($_SESSION['error']);
           class="w-full max-w-md p-10 bg-white rounded-[32px] shadow-2xl flex flex-col justify-center relative z-10">
 
         <h1 class="font-bold text-3xl text-center text-gray-900 tracking-tight">Set your password</h1>
-        <p class="text-gray-500 text-center my-5 text-sm">Create a password so you can log in with email next time.</p>
+        <p class="text-gray-500 text-center my-5 text-sm">Create a password so you can log in with email next time</p>
 
         <?php if ($error): ?>
             <p class="text-red-500 text-sm text-center mb-4"><?php echo htmlspecialchars($error); ?></p>
@@ -39,15 +39,15 @@ unset($_SESSION['error']);
 
         <input type="hidden" name="user_id" value="<?php echo $_SESSION['temp_user_id']; ?>">
 
-        <input type="password" name="password" placeholder="New Password" required
+        <input type="password" name="password" placeholder="Enter Password" required
             class="bg-gray-50 p-4 rounded-xl w-full mb-4 border border-gray-200 text-gray-900 placeholder-gray-400 outline-none focus:bg-white focus:border-black transition-all">
 
-        <input type="password" name="confirm_password" placeholder="Confirm Password" required
+        <input type="password" name="confirm_password" placeholder="Confirm your Password" required
             class="bg-gray-50 p-4 rounded-xl w-full mb-6 border border-gray-200 text-gray-900 placeholder-gray-400 outline-none focus:bg-white focus:border-black transition-all">
 
         <button type="submit"
             class="w-full bg-black text-white font-semibold p-4 rounded-xl text-center hover:bg-gray-800 transition-all shadow-md active:scale-[0.99] cursor-pointer">
-            Save Password
+            Create Account
         </button>
     </form>
 
