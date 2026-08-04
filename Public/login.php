@@ -9,6 +9,8 @@ unset($_SESSION['error'], $_SESSION['old_email']);
 
 $google_auth_url = "../auth/google_redirect.php"; 
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,18 +36,12 @@ $google_auth_url = "../auth/google_redirect.php";
     <form action="../auth/login.php" method="POST"
           class="w-full max-w-md p-10 bg-white rounded-[32px] shadow-2xl flex flex-col justify-center relative z-10">
 
-        <!-- Icon -->
-        <div class="bg-gray-100 p-3 rounded-2xl w-fit mx-auto mb-5 border border-gray-200 shadow-sm">
-            <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
-            </svg>
-        </div>
 
-        <h1 class="font-bold text-3xl text-center text-gray-900 tracking-tight">Sign in with email</h1>
+
+        <h1 class="font-bold text-3xl text-center text-gray-900 tracking-tight">Sign in </h1>
 
         <p class="text-gray-500 text-center my-5 text-sm sm:text-base leading-relaxed">
-            Make a new doc to bring your words, data, and teams together.
+            Enter your email and password to continue
         </p>
 
         <!-- ========== MESSAGE D'ERREUR PROFESSIONNEL ========== -->
@@ -82,14 +78,14 @@ $google_auth_url = "../auth/google_redirect.php";
             <input
                 type="password"
                 name="password"
-                placeholder="Enter the password"
+                placeholder="Enter Password"
                 class="bg-gray-50 p-4 rounded-xl w-full border border-gray-200 text-gray-900 placeholder-gray-400 outline-none focus:bg-white focus:border-black transition-all duration-200 focus:ring-2 focus:ring-gray-100"
                 required
             >
         </div>
 
         <!-- Forgot Password -->
-        <div class="flex justify-end mt-2.5">
+        <div class="flex justify-end mt-3">
             <a href="forgot_password.php" class="text-sm font-medium text-gray-500 hover:text-black hover:underline transition-colors">
                 Forgot password?
             </a>
@@ -97,7 +93,7 @@ $google_auth_url = "../auth/google_redirect.php";
 
         <!-- SUBMIT -->
         <button type="submit"
-            class="w-full bg-black text-white font-semibold p-4 rounded-xl mt-8 text-center hover:bg-gray-800 transition-all shadow-md active:scale-[0.99]">
+            class="w-full bg-black text-white font-semibold p-4 rounded-xl mt-8 text-center hover:bg-gray-800 cursor-pointer transition-all shadow-md active:scale-[0.99]">
             Get Started
         </button>
 

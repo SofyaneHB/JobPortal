@@ -52,8 +52,7 @@ if ($token) {
             <a href="forgot_password.php" class="text-center text-sm font-bold text-gray-900 hover:underline">Request a new link</a>
         <?php else: ?>
 
-            <h1 class="font-bold text-3xl text-center text-gray-900 tracking-tight">New password</h1>
-            <p class="text-gray-500 text-center my-5 text-sm">For <?php echo htmlspecialchars($email); ?></p>
+            <h1 class="font-bold text-3xl text-center text-gray-900 tracking-tight mb-5">Set a new password</h1>
 
             <?php if ($error): ?>
                 <p class="text-red-500 text-sm text-center mb-4"><?php echo htmlspecialchars($error); ?></p>
@@ -69,11 +68,11 @@ if ($token) {
     <input type="text" name="username" value="<?php echo htmlspecialchars($email); ?>" 
            autocomplete="username" class="hidden" readonly>
 
-    <input type="password" name="password" placeholder="New Password" required
+    <input type="password" name="password" placeholder="Enter New Password" required
         autocomplete="new-password"
         class="bg-gray-50 p-4 rounded-xl w-full mb-4 border border-gray-200 text-gray-900 placeholder-gray-400 outline-none focus:bg-white focus:border-black transition-all">
 
-    <input type="password" name="confirm_password" placeholder="Confirm Password" required
+    <input type="password" name="confirm_password" placeholder="Confirm your New Password" required
         autocomplete="new-password"
         class="bg-gray-50 p-4 rounded-xl w-full mb-6 border border-gray-200 text-gray-900 placeholder-gray-400 outline-none focus:bg-white focus:border-black transition-all">
 
